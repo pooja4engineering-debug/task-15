@@ -1,12 +1,6 @@
 
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  createContext
-} from 'react';
-
-const ThemeContext = createContext();
+import React, { useState, useEffect, useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
 
 function ThemeToggle() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -31,10 +25,8 @@ function NoteItem({ note, onDelete }) {
   );
 }
 
-function NotesApp() {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem('theme') || 'light'
-  );
+function App() {
+  const { theme } = useContext(ThemeContext);
 
   const [input, setInput] = useState('');
 
@@ -45,10 +37,6 @@ function NotesApp() {
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   useEffect(() => {
     document.title = `Notes (${notes.length})`;
@@ -69,50 +57,45 @@ function NotesApp() {
     setNotes(notes.filter(note => note.id !== id));
   }
 
-  function toggleTheme() {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  }
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={`app ${theme}`}>
-        <div className="container">
-          <h1>My Notes</h1>
+    <div className={`app ${theme}`}>
+      <div className="container">
+        <h1>My Notes</h1>
 
-          <ThemeToggle />
+        <ThemeToggle />
 
-          <div className="input-box">
-            <input
-              type="text"
-              placeholder="Write a note..."
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={e => {
-                if (e.key === 'Enter') addNote();
-              }}
-            />
-            <button onClick={addNote}>Add Note</button>
-          </div>
+        <div className="input-box">
+          <input
+            type="text"
+            placeholder="Write a note..."
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') addNote();
+            }}
+          />
 
-          <h2>Notes ({notes.length})</h2>
-
-          {notes.length === 0 ? (
-            <p>No notes yet.</p>
-          ) : (
-            <ul>
-              {notes.map(note => (
-                <NoteItem
-                  key={note.id}
-                  note={note}
-                  onDelete={deleteNote}
-                />
-              ))}
-            </ul>
-          )}
+          <button onClick={addNote}>Add Note</button>
         </div>
+
+        <h2>Notes ({notes.length})</h2>
+
+        {notes.length === 0 ? (
+          <p>No notes yet.</p>
+        ) : (
+          <ul>
+            {notes.map(note => (
+              <NoteItem
+                key={note.id}
+                note={note}
+                onDelete={deleteNote}
+              />
+            ))}
+          </ul>
+        )}
       </div>
-    </ThemeContext.Provider>
+    </div>
   );
 }
 
-export default NotesApp;
+export default App;
