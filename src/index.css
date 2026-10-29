@@ -1,0 +1,93 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 40px 20px;
+  transition: 0.3s;
+}
+
+.app.light {
+  background: #f4f4f4;
+  color: #222;
+}
+
+.app.dark {
+  background: #222;
+  color: white;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 10px;
+  background: white;
+  color: #222;
+}
+
+.dark .container {
+  background: #333;
+  color: white;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 5px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+  margin: 25px 0;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 5px;
+  overflow-wrap: anywhere;
+}
+
+.note.light {
+  background: #eee;
+  color: #222;
+}
+
+.note.dark {
+  background: #444;
+  color: white;
+}
+
+.delete {
+  flex-shrink: 0;
+  background: #dc2626;
+}
